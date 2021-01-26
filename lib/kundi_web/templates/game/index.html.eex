@@ -1,0 +1,48 @@
+<div class="title"><h1> Welcome to the Arena</h1></div>
+<table>
+  <tbody>
+    <%= for x <- 1..10 do %>
+    <tr>
+      <%= for y <- 1..10 do %>
+        <%= if {x, y} in @game_details.unwalkable_tiles do %>
+          <td class="map-walls"></td>
+        <% else %>
+          <td class=<%= get_position_details(@game_details, {x,y}).status %>><%= get_position_details(@game_details, {x,y}).name %></td>
+        <% end %>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="actions">
+  <%= button "LEFT",
+    disabled: !check_player_move(@game_details, "L"),
+    to: generate_route(@conn, :player_move, "L", @game_details),
+    method: :post
+  %>
+
+  <%= button "DOWN",
+    disabled: !check_player_move(@game_details, "D"),
+    to: generate_route(@conn, :player_move, "D", @game_details),
+    method: :post
+  %>
+
+  <%= button "UP",
+    disabled: !check_player_move(@game_details, "U"),
+    to: generate_route(@conn, :player_move, "U", @game_details),
+    method: :post
+  %>
+
+  <%= button "RIGHT",
+    disabled: !check_player_move(@game_details, "R"),
+    to: generate_route(@conn, :player_move, "R", @game_details),
+    method: :post
+  %>
+
+  <%= button "ATTACK",
+    disabled: !check_player_move(@game_details, "A"),
+    to: generate_route(@conn, :player_move, "A", @game_details),
+    method: :post
+  %>
+</div>
